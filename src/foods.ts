@@ -28,7 +28,7 @@ export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
 
     if (invalidLine(values)) return
 
-    const foodName = values[1]
+    const foodName = values[1].toLowerCase()
 
     const rawProperties = getRawProperties(propertiesName, values)
     const properties = parseProperties(rawProperties)

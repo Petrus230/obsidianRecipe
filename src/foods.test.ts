@@ -13,7 +13,7 @@ describe('Ingredient', () => {
 
     //assert
     expect(Object.keys(foods).length).toEqual(1);
-    expect(foods["Arroz Blanco"]["calories"]).toEqual(345);
+    expect(foods["arroz blanco"]["calories"]).toEqual(345);
   });
   it('contains fats', () => {
     //arrange
@@ -26,7 +26,7 @@ describe('Ingredient', () => {
 
 
     //assert
-    expect(foods["Arroz Blanco"]["fat"]).toEqual(0.7);
+    expect(foods["arroz blanco"]["fat"]).toEqual(0.7);
   });
 
   it('contains protein', () => {
@@ -40,7 +40,7 @@ describe('Ingredient', () => {
 
 
     //assert
-    expect(foods["Arroz Blanco"]["protein"]).toEqual(8.1);
+    expect(foods["arroz blanco"]["protein"]).toEqual(8.1);
   });
 
   it('contains carbohydrates', () => {
@@ -53,7 +53,7 @@ describe('Ingredient', () => {
     const foods = readFoodsFromCsv(input)
 
     //assert
-    expect(foods["Arroz Blanco"]["carbohydrates"]).toEqual(77.7);
+    expect(foods["arroz blanco"]["carbohydrates"]).toEqual(77.7);
   });
 
   it('do not create empty food', () => {
