@@ -1,7 +1,8 @@
-const PROPERTY_ALIAS ={ 
+const PROPERTY_ALIAS: Record<keyof FoodPropeties, string> = {
   "fat": "grasas g",
   "protein": "proteína g",
-  "calories": "calorias"
+  "calories": "calorias",
+  "carbohydrates": "cho t g"
 }
 
 type Foods = {
@@ -11,7 +12,8 @@ type Foods = {
 type FoodPropeties = {
   calories: Number,
   fat: Number,
-  protein: Number
+  protein: Number,
+  carbohydrates: Number
 }
 
 export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
@@ -23,6 +25,9 @@ export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
 
   foodLines.forEach(foodLine => {
     const values = foodLine.split(delimiter);
+
+    if (invalidLine(values)) return
+
     const foodName = values[1]
 
     const rawProperties = getRawProperties(propertiesName, values)
@@ -39,19 +44,24 @@ function parseProperties(rawProperties: { [name: string]: string }): FoodPropeti
   const result = blankPropeties()
   const propertiesNames = Object.keys(result) as (keyof FoodPropeties)[]
 
-  propertiesNames.forEach((propertieName) =>{
+  propertiesNames.forEach((propertieName) => {
     result[propertieName] = Number(rawProperties[PROPERTY_ALIAS[propertieName]])
   })
 
   return result
 }
 
+function invalidLine(values: string[]): boolean {
+  return values.length < 2
+}
 
-const blankPropeties = ():FoodPropeties=>{
+
+const blankPropeties = (): FoodPropeties => {
   return {
     calories: 0,
     fat: 0,
-    protein: 0
+    protein: 0,
+    carbohydrates: 0
   }
 }
 
