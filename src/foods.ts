@@ -1,24 +1,26 @@
-const PROPERTY_ALIAS: Record<keyof FoodPropeties, string> = {
+const PROPERTY_ALIAS: Record<keyof Food, string> = {
+  "name": "alimentos",
   "fat": "grasas g",
   "protein": "proteína g",
   "calories": "calorias",
   "carbohydrates": "cho t g"
 }
 
-type Foods = {
-  [name: string]: FoodPropeties
+type indexFoods = {
+  [name: string]: Food
 }
 
-type FoodPropeties = {
+type Food = {
+  name: string,
   calories: Number,
   fat: Number,
   protein: Number,
   carbohydrates: Number
 }
 
-export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
+export const readFoodsFromCsv = (data: string, delimiter = ','): indexFoods => {
   const propertiesName = data.slice(0, data.indexOf('\n')).split(delimiter).map(x => x.toLocaleLowerCase());
-  const result: Foods = {}
+  const result: indexFoods = {}
   const foodLines = data
     .split('\n')
     .slice(2)
@@ -28,24 +30,25 @@ export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
 
     if (invalidLine(values)) return
 
-    const foodName = values[1].toLowerCase()
-
     const rawProperties = getRawProperties(propertiesName, values)
     const properties = parseProperties(rawProperties)
 
-    result[foodName] = properties
+    result[properties.name] = properties
 
   });
 
   return result
 };
 
-function parseProperties(rawProperties: { [name: string]: string }): FoodPropeties {
+function parseProperties(rawProperties: { [name: string]: string }): Food {
   const result = blankPropeties()
-  const propertiesNames = Object.keys(result) as (keyof FoodPropeties)[]
+  const propertiesNames = Object.keys(result) as (keyof Food)[]
 
   propertiesNames.forEach((propertieName) => {
-    result[propertieName] = Number(rawProperties[PROPERTY_ALIAS[propertieName]])
+    if (propertieName === "name") 
+      result[propertieName] = rawProperties[PROPERTY_ALIAS[propertieName]].toLowerCase()
+    else
+      result[propertieName] = Number(rawProperties[PROPERTY_ALIAS[propertieName]])
   })
 
   return result
@@ -56,8 +59,9 @@ function invalidLine(values: string[]): boolean {
 }
 
 
-const blankPropeties = (): FoodPropeties => {
+const blankPropeties = (): Food => {
   return {
+    name: "",
     calories: 0,
     fat: 0,
     protein: 0,
