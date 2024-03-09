@@ -26,7 +26,6 @@ export default class ExamplePlugin extends Plugin {
 		const file = this.app.workspace.getActiveFile();
 		if (file) {
 			const content = await this.app.vault.read(file);
-			console.log(content)
 			this.updateLineCount(content);
 		} else {
 			this.updateLineCount(undefined);

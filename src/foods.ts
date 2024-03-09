@@ -1,15 +1,21 @@
+const PROPERTY_ALIAS ={ 
+  "fat": "grasas g",
+  "protein": "proteína g",
+  "calories": "calorias"
+}
+
 type Foods = {
   [name: string]: FoodPropeties
 }
 
 type FoodPropeties = {
   calories: string,
-  fat: string
+  fat: string,
+  protein: string
 }
 
 export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
   const propertiesName = data.slice(0, data.indexOf('\n')).split(delimiter).map(x => x.toLocaleLowerCase());
-  console.log(propertiesName)
   const result: Foods = {}
   const foodLines = data
     .split('\n')
@@ -20,11 +26,7 @@ export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
     const name = values[1]
 
     const rawProperties = getRawProperties(propertiesName, values)
-
-    const properties: FoodPropeties = {
-      calories: rawProperties["calories"],
-      fat: rawProperties["grasas g"]
-    }
+    const properties = parseProperties(rawProperties)
 
     result[name] = properties
 
@@ -33,7 +35,26 @@ export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
   return result
 };
 
-function getRawProperties(propertiesName:string[], values: string[] ) {
+function parseProperties(rawProperties: { [name: string]: string }): FoodPropeties {
+  const result = blankPropeties()
+
+  const keyProperties = Object.keys(result) as (keyof FoodPropeties)[]
+  keyProperties.forEach((key) =>{
+    result[key] = rawProperties[PROPERTY_ALIAS[key]]
+  })
+  return result
+}
+
+
+const blankPropeties = ():FoodPropeties=>{
+  return {
+    calories: "0",
+    fat: "0",
+    protein: "0"
+  }
+}
+
+function getRawProperties(propertiesName: string[], values: string[]) {
   return propertiesName.reduce(
     (properties, title, index) => ((properties[title] = values[index]), properties),
     {} as { [key: string]: string }
