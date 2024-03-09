@@ -9,9 +9,9 @@ type Foods = {
 }
 
 type FoodPropeties = {
-  calories: string,
-  fat: string,
-  protein: string
+  calories: Number,
+  fat: Number,
+  protein: Number
 }
 
 export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
@@ -23,12 +23,12 @@ export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
 
   foodLines.forEach(foodLine => {
     const values = foodLine.split(delimiter);
-    const name = values[1]
+    const foodName = values[1]
 
     const rawProperties = getRawProperties(propertiesName, values)
     const properties = parseProperties(rawProperties)
 
-    result[name] = properties
+    result[foodName] = properties
 
   });
 
@@ -37,20 +37,21 @@ export const readFoodsFromCsv = (data: string, delimiter = ','): Foods => {
 
 function parseProperties(rawProperties: { [name: string]: string }): FoodPropeties {
   const result = blankPropeties()
+  const propertiesNames = Object.keys(result) as (keyof FoodPropeties)[]
 
-  const keyProperties = Object.keys(result) as (keyof FoodPropeties)[]
-  keyProperties.forEach((key) =>{
-    result[key] = rawProperties[PROPERTY_ALIAS[key]]
+  propertiesNames.forEach((propertieName) =>{
+    result[propertieName] = Number(rawProperties[PROPERTY_ALIAS[propertieName]])
   })
+
   return result
 }
 
 
 const blankPropeties = ():FoodPropeties=>{
   return {
-    calories: "0",
-    fat: "0",
-    protein: "0"
+    calories: 0,
+    fat: 0,
+    protein: 0
   }
 }
 

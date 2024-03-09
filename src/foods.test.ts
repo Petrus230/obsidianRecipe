@@ -13,7 +13,7 @@ describe('Ingredient', () => {
 
     //assert
     expect(Object.keys(foods).length).toEqual(1);
-    expect(foods["Arroz Blanco"]["calories"]).toEqual("345");
+    expect(foods["Arroz Blanco"]["calories"]).toEqual(345);
   });
   it('contains fats', () => {
     //arrange
@@ -26,7 +26,7 @@ describe('Ingredient', () => {
 
 
     //assert
-    expect(foods["Arroz Blanco"]["fat"]).toEqual("0.7");
+    expect(foods["Arroz Blanco"]["fat"]).toEqual(0.7);
   });
   it('contains protein', () => {
     //arrange
@@ -39,6 +39,6 @@ describe('Ingredient', () => {
 
 
     //assert
-    expect(foods["Arroz Blanco"]["protein"]).toEqual("8.1");
+    expect(foods["Arroz Blanco"]["protein"]).toEqual(8.1);
   });
 });
