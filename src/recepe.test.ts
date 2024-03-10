@@ -21,17 +21,17 @@ describe('Recept', () => {
     const result = calculateCalories(repece, foods)
 
     //assert
-    expect(result).toEqual(20);
+    expect(result).toEqual(200);
   });
 });
 
 const foods: { [key: string]: Food } = {
   harina: {
     name: "harina",
-    calories: 0.1,
-    fat: 0,
-    protein: 0,
-    carbohydrates: 0
+    calories: 100,
+    fat: 10,
+    protein: 5,
+    carbohydrates: 70
   },
   huevos: {
     name: "huevos",
