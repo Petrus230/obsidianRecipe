@@ -6,21 +6,17 @@ const PROPERTY_ALIAS: Record<keyof Food, string> = {
   "carbohydrates": "cho t g"
 }
 
-type indexFoods = {
-  [name: string]: Food
-}
-
-type Food = {
+export type Food = {
   name: string,
-  calories: Number,
-  fat: Number,
-  protein: Number,
-  carbohydrates: Number
+  calories: number,
+  fat: number,
+  protein: number,
+  carbohydrates: number
 }
 
-export const readFoodsFromCsv = (data: string, delimiter = ','): indexFoods => {
+export const readFoodsFromCsv = (data: string, delimiter = ','): {[name: string]: Food} => {
   const propertiesName = data.slice(0, data.indexOf('\n')).split(delimiter).map(x => x.toLocaleLowerCase());
-  const result: indexFoods = {}
+  const result: {[name: string]: Food} = {}
   const foodLines = data
     .split('\n')
     .slice(2)
