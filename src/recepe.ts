@@ -12,9 +12,23 @@ export class Recipe {
     return this.ingredients.map(ingredient => ingredient.showName())
   }
 
-  totalCalories(): number {
-    return this.ingredients.reduce(
-      (totalCalories, ingredient) => totalCalories += ingredient.calories(), 0)
+  totalProperties(): Food {
+    const total: Food = {
+      name: "",
+      calories: 0,
+      fat: 0,
+      protein: 0,
+      carbohydrates: 0
+    }
+    this.ingredients.forEach(
+      (ingredient) => {
+        total.calories += ingredient.calories()
+        total.fat += ingredient.fat()
+        total.protein += ingredient.protein()
+        total.carbohydrates += ingredient.carbohydrates()
+      })
+
+      return total
   }
 
   static read(text: string, foods: { [name: string]: Food }) {

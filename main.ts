@@ -8,13 +8,12 @@ export default class ExamplePlugin extends Plugin {
 	foods: { [name: string]: Food }
 
 	onload() {
-		this.statusBarElement = this.addStatusBarItem().createEl("span");
 		this.foods = readFoodsFromCsv(rawTable)
 
+		this.statusBarElement = this.addStatusBarItem().createEl("span");
 		this.readActiveFileAndUpdateLineCount();
 
 		this.app.workspace.on("editor-change", (editor) => {
-			const content = editor.getDoc().getValue();
 			this.statusBarElement.textContent = ``;
 
 		});

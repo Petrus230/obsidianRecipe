@@ -20,10 +20,29 @@ describe('Recipe', () => {
 
 
     //act
-    const result = recipe.totalCalories()
+    const result = recipe.totalProperties()
 
     //assert
-    expect(result).toEqual(200);
+    expect(result.calories).toEqual(200);
+    expect(result.fat).toEqual(20);
+    expect(result.protein).toEqual(10);
+    expect(result.carbohydrates).toEqual(140);
+  });
+
+  it('calculates the sum of his ingredients', () => {
+    //arrange
+    const text = `# Ingredients:\n- 100 Harina\n- 100 Huevos`
+    const recipe = Recipe.read(text, foods)
+
+
+    //act
+    const result = recipe.totalProperties()
+
+    //assert
+    expect(result.calories).toEqual(150);
+    expect(result.fat).toEqual(12);
+    expect(result.protein).toEqual(9);
+    expect(result.carbohydrates).toEqual(75);
   });
 });
 
@@ -38,8 +57,8 @@ const foods: { [key: string]: Food } = {
   huevos: {
     name: "huevos",
     calories: 50,
-    fat: 0,
-    protein: 0,
-    carbohydrates: 0
+    fat: 2,
+    protein: 4,
+    carbohydrates: 5
   }
 }
