@@ -33,10 +33,13 @@ export default class ExamplePlugin extends Plugin {
 
 			const content = await this.app.vault.read(file);
 			const recipe = Recipe.read(content, this.foods)
-			console.log(recipe)
-			const calories = recipe.totalCalories()
+			const recipeProperties = recipe.totalProperties()
 
-			this.statusBarElement.textContent = `Calories ${calories}`;
+			this.statusBarElement.textContent = 
+				`Calories ${Math.round(recipeProperties.calories)} -> 
+				Fat ${Math.round(recipeProperties.fat)} -> 
+				Protein ${Math.round(recipeProperties.protein)} -> 
+				Carbohydrates ${Math.round(recipeProperties.carbohydrates)}`;
 
 
 		} else {
