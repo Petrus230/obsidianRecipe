@@ -37,4 +37,24 @@ describe("Ingredient", () => {
     expect(ingredient.protein()).toEqual(10)
     expect(ingredient.carbohydrates()).toEqual(140)
   })
+
+  it("could be two words", () => {
+    const text = "- 200 Crema cacahuete"
+    const food = {
+      "crema cacahuete": {
+        name: "crema cacahuete",
+        calories: 100,
+        fat: 10,
+        protein: 5,
+        carbohydrates: 70
+      }
+    }
+
+    const ingredient = Ingredient.read(text, food)
+
+    expect(ingredient.calories()).toEqual(200)
+    expect(ingredient.fat()).toEqual(20)
+    expect(ingredient.protein()).toEqual(10)
+    expect(ingredient.carbohydrates()).toEqual(140)
+  })
 })

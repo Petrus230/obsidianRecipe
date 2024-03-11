@@ -10,6 +10,8 @@ export default class ExamplePlugin extends Plugin {
 	onload() {
 		this.foods = readFoodsFromCsv(rawTable)
 
+		console.log(this.foods)
+
 		this.statusBarElement = this.addStatusBarItem().createEl("span");
 		this.readActiveFileAndUpdateLineCount();
 
