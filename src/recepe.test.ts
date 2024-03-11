@@ -1,24 +1,26 @@
 import { Food } from "./foods";
-import { calculateCalories, readIngredients } from "./recepe";
+import { Recipe } from "./recepe";
 
-describe('Recept', () => {
+describe('Recipe', () => {
   it('has ingredientes', () => {
     //arrange
     const input = `# Ingredients:\n- 200 Harina\n- 2 Huevos`
 
     //act
-    const ingredients = readIngredients(input, foods)
+    const recipe = Recipe.read(input, foods)
 
     //assert
-    expect(ingredients.length).toEqual(2);
+    expect(recipe.retrieveIngredients()).toEqual(["harina", "huevos"]);
   });
 
   it('calculates calories for the quantity which are using', () => {
     //arrange
-    const repece = `# Ingredients:\n- 200 Harina`
+    const text = `# Ingredients:\n- 200 Harina`
+    const recipe = Recipe.read(text, foods)
+
 
     //act
-    const result = calculateCalories(repece, foods)
+    const result = recipe.totalCalories()
 
     //assert
     expect(result).toEqual(200);
